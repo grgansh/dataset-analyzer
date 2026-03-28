@@ -73,7 +73,7 @@ class OpenAIAgentExecutor(AgentExecutor):
                     messages=messages,
                     tools=openai_tools if openai_tools else None,
                     tool_choice='auto' if openai_tools else None,
-                    temperature=0.1,
+                    temperature=0.0,
                     max_tokens=4000,
                 )
 

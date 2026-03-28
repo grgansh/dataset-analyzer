@@ -1,6 +1,8 @@
 from typing import Any
 import pandas as pd
 from io import StringIO
+import json
+import os
 
 class DatasetAnalyzerToolset:
     """Dataset Analyzer Toolset"""
@@ -9,10 +11,28 @@ class DatasetAnalyzerToolset:
         pass
 
     async def analyze_dataset(self, data: str) -> str:
-        """Analyze a CSV dataset and return smart insights"""
+        """Analyze a CSV dataset, JSON dataset, or file path and return smart insights"""
 
         try:
-            df = pd.read_csv(StringIO(data))
+            #detect input type
+            if os.path.exists(data):
+                # File path
+                if data.endswith(".csv"):
+                    df = pd.read_csv(data)
+                elif data.endswith(".xlsx"):
+                    df = pd.read_excel(data)
+                else:
+                    return "Unsupported file format"
+
+            elif data.strip().startswith("{") or data.strip().startswith("["):
+                # JSON input
+                json_data = json.loads(data)
+                df = pd.DataFrame(json_data)
+
+            else:
+                # Assume CSV text
+                df = pd.read_csv(StringIO(data))
+
 
             # ---------------- BASIC INFO ----------------
             rows = int(df.shape[0])

@@ -64,5 +64,9 @@ def create_agent():
 
         Be strict, analytical, and cautious in your responses.
         Do not give generic answers.
-        Always explain WHY something is a problem.""",
+        Always explain WHY something is a problem.
+        Always call the analyze_dataset tool for dataset analysis.
+        Do not generate answers without using the tool.
+        
+        """,
             }
